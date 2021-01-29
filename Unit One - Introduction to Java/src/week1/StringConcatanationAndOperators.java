@@ -2,8 +2,8 @@ package week1;
 
 public class StringConcatanationAndOperators {
     public static void main(String[] args) {
-        //exampleOne();
-        //exampleTwo();
+        exampleOne();
+        exampleTwo();
         exampleThree();
         exampleFour();
     }

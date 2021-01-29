@@ -26,15 +26,15 @@ public class VariablesAndAssignmentOperatorsHomework {
     }
 
     private static void questionFive() {
-        double pennies, nickles, dimes, quarters, loonies, toonies, money;
+        double pennies, nickles, dimes, quarters, loonies, toonies, total;
         pennies = 15;
         nickles = 7;
         dimes = 3;
         quarters = 12;
         loonies = 3;
         toonies = 8;
-        money = (0.01*pennies) + (0.05*nickles) + (0.1*dimes) + (0.25*quarters) + (loonies) + (2*toonies);
-        System.out.println("The total balance is $" + money);
+        total = (0.01*pennies) + (0.05*nickles) + (0.1*dimes) + (0.25*quarters) + (loonies) + (2*toonies);
+        System.out.println("The total balance is $" + total);
     }
 
     private static void questionFour() {

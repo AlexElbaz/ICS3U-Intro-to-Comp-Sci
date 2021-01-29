@@ -25,30 +25,30 @@ public class PrintlnHomework {
     }
 
     private static void questionTwo() {
-        System.out.println("     -----     ");
-        System.out.println("   /       \\  ");
+        System.out.println("     -----    ");
+        System.out.println("   /       \\ ");
         System.out.println("  |         | ");
-        System.out.println("   \\       /     ");
-        System.out.println("     -----     ");
-        System.out.println("   \\   |   /   ");
-        System.out.println("    \\  |  /     ");
-        System.out.println("     \\ | /       ");
-        System.out.println("       |        ");
-        System.out.println("       |        ");
-        System.out.println("       |        ");
-        System.out.println("      / \\        ");
-        System.out.println("     /   \\        ");
-        System.out.println("    /     \\        ");
-        System.out.println("   /       \\        ");
+        System.out.println("   \\       / ");
+        System.out.println("     -----    ");
+        System.out.println("   \\   |   / ");
+        System.out.println("    \\  |  /  ");
+        System.out.println("     \\ | /   ");
+        System.out.println("       |      ");
+        System.out.println("       |      ");
+        System.out.println("       |      ");
+        System.out.println("      / \\    ");
+        System.out.println("     /   \\   ");
+        System.out.println("    /     \\  ");
+        System.out.println("   /       \\ ");
     }
 
     private static void questionOne() {
         System.out.println("      A         EEEEEEEEE");
-        System.out.println("     A A        E");
-        System.out.println("    A   A       E");
-        System.out.println("   AAAAAAA      EEEEEEE");
-        System.out.println("  A       A     E");
-        System.out.println(" A         A    E");
+        System.out.println("     A A        E        ");
+        System.out.println("    A   A       E        ");
+        System.out.println("   AAAAAAA      EEEEEEE  ");
+        System.out.println("  A       A     E        ");
+        System.out.println(" A         A    E        ");
         System.out.println("A           A   EEEEEEEEE");
     }
 }

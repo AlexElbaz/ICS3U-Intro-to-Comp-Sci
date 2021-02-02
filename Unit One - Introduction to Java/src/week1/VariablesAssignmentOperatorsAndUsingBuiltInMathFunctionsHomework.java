@@ -8,9 +8,11 @@ public class VariablesAssignmentOperatorsAndUsingBuiltInMathFunctionsHomework {
         questionFour();
         questionFive();
         questionSix();
-
     }
 
+
+
+    
     private static void questionSix() {
         double a, b, c, x1, x2;
         a = 1;

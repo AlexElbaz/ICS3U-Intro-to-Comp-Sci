@@ -1,6 +1,6 @@
 package week1;
 
-public class PrintlnHomework {
+public class PrintlnAndEscapeSequenceHomework {
     public static void main(String[] args) {
         questionOne();
         questionTwo();

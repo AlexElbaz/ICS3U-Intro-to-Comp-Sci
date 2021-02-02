@@ -1,6 +1,6 @@
 package week1;
 
-public class VariablesAndAssignmentOperatorsHomework {
+public class VariablesAssignmentOperatorsAndUsingBuiltInMathFunctionsHomework {
     public static void main(String[] args) {
         questionOne();
         questionTwo();

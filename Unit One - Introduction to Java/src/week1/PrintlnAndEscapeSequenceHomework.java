@@ -8,6 +8,8 @@ public class PrintlnAndEscapeSequenceHomework {
         questionFour();
     }
 
+
+    
     private static void questionFour() {
         System.out.println("/////////////////////////////////////////////////////////////////////");
         System.out.println("/                                                                   /");

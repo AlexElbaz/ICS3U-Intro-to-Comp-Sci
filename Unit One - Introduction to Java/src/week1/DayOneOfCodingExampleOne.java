@@ -1,4 +1,5 @@
 package week1;
+
 /*
 * ExampleOne is the name of the Class. It has the same name as the file.
 * Classes are meant to model an object's behaviour.

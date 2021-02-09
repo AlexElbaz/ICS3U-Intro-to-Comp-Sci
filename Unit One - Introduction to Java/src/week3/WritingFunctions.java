@@ -9,11 +9,11 @@ public class WritingFunctions {
         int y = 8;
 
         int z = sum(x, y);
-        //System.out.println(z);
+        System.out.println(z);
 
 
         addOne(x);
-        //System.out.println(x);
+        System.out.println(x);
 
 
         double x1, y1, x2, y2;

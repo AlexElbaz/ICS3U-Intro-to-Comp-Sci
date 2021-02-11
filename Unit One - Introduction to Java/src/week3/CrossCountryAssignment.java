@@ -1,30 +1,35 @@
 package week3;
-
 import java.util.Scanner;
 
 public class CrossCountryAssignment {
     public static void main(String[] args) {
-
         Scanner in = new Scanner(System.in);
 
+        addRun(in);
+        addRun(in);
+        addRun(in);
 
+        in.close();
+    }
+
+    private static void addRun(Scanner in) {
         String name = getName(in);
-        String firstSplit = getTimeToFirstMile(in, name);
-        String timeToSecondMile = getTimeToSecondMile(in, name);
-        String fullRunTime = getFullRunTime(in, name);
-        String secondSplit = getSecondSplit(firstSplit, timeToSecondMile);
-        String thirdSplit = getThirdSplit(timeToSecondMile, fullRunTime);
+        String firstSplit = getTime(in, name, "time to the first mile");
+        String timeToSecondMile = getTime(in, name, "time to the second mile");
+        String totalTime = getTime(in, name, "full run time");
+        String secondSplit = getSplit(firstSplit, timeToSecondMile);
+        String thirdSplit = getSplit(timeToSecondMile, totalTime);
 
         System.out.println("");
         System.out.println("--------------------------");
         System.out.println(name + "'s Run Summary");
         System.out.println("--------------------------");
-        System.out.println("Total run time: " + fullRunTime);
+        System.out.println("Total run time: " + totalTime);
         System.out.println("First split: " + firstSplit);
         System.out.println("Second split: " + secondSplit);
         System.out.println("Third split: " + thirdSplit);
-
-        in.close();
+        System.out.println("--------------------------");
+        System.out.println("");
     }
 
     private static String getName(Scanner in) {
@@ -33,62 +38,25 @@ public class CrossCountryAssignment {
         return name;
     }
 
-    private static String getTimeToFirstMile(Scanner in, String name) {
-        System.out.print(name.substring(0, name.indexOf(" ")) + ", please input your time to the first mile (mm:ss.sss): ");
-        String timeToFirstMile = in.nextLine();
-        return timeToFirstMile;
-    }
-    
-    private static String getTimeToSecondMile(Scanner in, String name) {
-        System.out.print(name.substring(0, name.indexOf(" ")) + ", please input your time to the second mile (mm:ss.sss): ");
-        String timeToSecondMile = in.nextLine();
-        return timeToSecondMile;
+    private static String getTime(Scanner in, String name, String marker) {
+        System.out.print(name.substring(0, name.indexOf(" ")) + ", please input your " + marker + " (mm:ss.sss): ");
+        String timeToMarker = in.nextLine();
+        return timeToMarker;
     }
 
-    private static String getFullRunTime(Scanner in, String name) {
-        System.out.print(name.substring(0, name.indexOf(" ")) + ", please input your full run time (mm:ss.sss): ");
-        String fullRunTime = in.nextLine();
-        return fullRunTime;
-    }
+    private static String getSplit(String marker1, String marker2) {
+        int marker1Minutes = Integer.parseInt(marker1.substring(0, marker1.indexOf(":")));
+        int marker2Minutes = Integer.parseInt(marker2.substring(0, marker2.indexOf(":")));
+        int splitMinutes = marker2Minutes - marker1Minutes;
 
-    private static String getSecondSplit(String firstSplit, String timeToSecondMile) {
-        int firstMileMinutes = Integer.parseInt(firstSplit.substring(0, firstSplit.indexOf(":")));
-        int startToSecondMileMinutes = Integer.parseInt(timeToSecondMile.substring(0, timeToSecondMile.indexOf(":")));
-        int secondSplitMinutes = startToSecondMileMinutes - firstMileMinutes;
-
-        double firstMileSeconds = Double.parseDouble(firstSplit.substring(firstSplit.indexOf(":") + 1));
-        double startToSecondMileSeconds = Double.parseDouble(timeToSecondMile.substring(timeToSecondMile.indexOf(":") + 1));
-        if (firstMileSeconds > startToSecondMileSeconds) {
-            secondSplitMinutes--;
-            startToSecondMileSeconds += 60;
+        double marker1Seconds = Double.parseDouble(marker1.substring(marker1.indexOf(":") + 1));
+        double marker2Seconds = Double.parseDouble(marker2.substring(marker2.indexOf(":") + 1));
+        if (marker1Seconds > marker2Seconds) {
+            splitMinutes--;
+            marker2Seconds += 60;
         }
-        double secondSplitSeconds = startToSecondMileSeconds - firstMileSeconds; 
+        double splitSeconds = marker2Seconds - marker1Seconds; 
         
-        if (secondSplitSeconds < 10) {
-            return secondSplitMinutes + ":0" + Math.round(secondSplitSeconds * 1000) / 1000.0;
-        } else {
-            return secondSplitMinutes + ":" + Math.round(secondSplitSeconds * 1000) / 1000.0;
-        }
-    }
-
-    private static String getThirdSplit(String timeToSecondMile, String fullRunTime) {
-        int startToSecondMileMinutes = Integer.parseInt(timeToSecondMile.substring(0, timeToSecondMile.indexOf(":")));
-        int fullRunMinutes = Integer.parseInt(fullRunTime.substring(0, fullRunTime.indexOf(":")));
-        int thirdSplitMinutes = fullRunMinutes - startToSecondMileMinutes;
-
-        double startToSecondMileSeconds = Double.parseDouble(timeToSecondMile.substring(timeToSecondMile.indexOf(":") + 1));
-        double fullRunSeconds = Double.parseDouble(fullRunTime.substring(fullRunTime.indexOf(":") + 1));
-        if (startToSecondMileSeconds > fullRunSeconds) {
-            thirdSplitMinutes--;
-            fullRunSeconds += 60;
-        }
-
-        double thirdSplitSeconds = fullRunSeconds - startToSecondMileSeconds;
-         
-        if (thirdSplitSeconds < 10) {
-            return thirdSplitMinutes + ":0" + Math.round(thirdSplitSeconds * 1000) / 1000.0;
-        } else {
-            return thirdSplitMinutes + ":" + Math.round(thirdSplitSeconds * 1000) / 1000.0;
-        } 
+        return String.format("%d:%06.3f", splitMinutes, splitSeconds);
     }
 }

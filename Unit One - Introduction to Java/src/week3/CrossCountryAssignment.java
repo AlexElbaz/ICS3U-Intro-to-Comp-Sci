@@ -80,32 +80,30 @@ public class CrossCountryAssignment {
 
     /**
      * This function is used to determine the user's splits for their inputted run.
-     * @param marker1 is the closer of the two markers inputted into the function to the beginning of the run.
-     * @param marker2 is the further of the two markers inputted into the function from the beginning of the run.
-     * Note: Unless it wasn't clear, in this program a marker represents one of three specific point in the run where the runners note
-     *  their times (first mile, second mile, end of run).
+     * @param startMarker is a variable representing the time from the beginning of the run to the point which marks the start of a given split (the closer of the two markers to the beginning of the run).
+     * @param endMarker is a variable representing the time from the beginning of the run to the point which marks the end of a given split (the further of the two markers from the beginning of the run).
      * @return This function returns a split time (for either the second or third split (which are the only ones requiring calculations)
      *  depending on which split the function was called for) formatted so that it will always be mm:ss.sss.
      */
-    private static String getSplit(String marker1, String marker2) {
-        int marker1Minutes = Integer.parseInt(marker1.substring(0, marker1.indexOf(":")));
-            // ^^ This line takes marker1, a time to a specific marker inputted by the user, cuts off everything from the colon onwards,
+    private static String getSplit(String startMarker, String endMarker) {
+        int startMarkerMinutes = Integer.parseInt(startMarker.substring(0, startMarker.indexOf(":")));
+            // ^^ This line takes startMarker, a time to a specific marker inputted by the user, cuts off everything from the colon onwards,
             //  and parses it as an integer, effectively getting the amount of minutes from the beginning of the run to that marker.
-        int marker2Minutes = Integer.parseInt(marker2.substring(0, marker2.indexOf(":")));
-        int splitMinutes = marker2Minutes - marker1Minutes;
+        int endMarkerMinutes = Integer.parseInt(endMarker.substring(0, endMarker.indexOf(":")));
+        int splitMinutes = endMarkerMinutes - startMarkerMinutes;
 
-        double marker1Seconds = Double.parseDouble(marker1.substring(marker1.indexOf(":") + 1));
+        double startMarkerSeconds = Double.parseDouble(startMarker.substring(startMarker.indexOf(":") + 1));
             // ^^ This does a similar set of actions to the previous comment (line 93/94), but instead of getting the minutes,
             //  it gets the seconds, cutting off everything from the beginning to the colon (including the colon), and parsing it as a double.
-        double marker2Seconds = Double.parseDouble(marker2.substring(marker2.indexOf(":") + 1));
+        double endMarkerSeconds = Double.parseDouble(endMarker.substring(endMarker.indexOf(":") + 1));
         
-        if (marker1Seconds > marker2Seconds) {
+        if (startMarkerSeconds > endMarkerSeconds) {
             splitMinutes--;
-            marker2Seconds += 60;
+            endMarkerSeconds += 60;
         }
             // ^^ This if statement is here so that if the subtration of seconds would result in a negative, it doesn't.
 
-        double splitSeconds = marker2Seconds - marker1Seconds;
+        double splitSeconds = endMarkerSeconds - startMarkerSeconds;
         
         return String.format("%d:%06.3f", splitMinutes, splitSeconds);
             // ^^ This line uses a special function to format the split minutes and seconds so that it will always be in the form mm:ss.sss.

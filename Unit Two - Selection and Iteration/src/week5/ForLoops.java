@@ -140,7 +140,6 @@ public class ForLoops {
                 numVowels++;
             }
         }
-
         return numVowels;
    }
 
@@ -171,7 +170,6 @@ public class ForLoops {
             System.out.println("What is the Mystery Colour?");
             colour = in.nextLine();
         }
-
         System.out.println("Correct! I like the colour " + mysteryColour);
    }
 
@@ -190,7 +188,6 @@ public class ForLoops {
        for (int i = start; i <= end; i++) {
           result += i;
        }
-       
        return result;
    }
 }

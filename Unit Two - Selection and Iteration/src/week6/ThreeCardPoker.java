@@ -37,8 +37,8 @@ public class ThreeCardPoker {
         //  line break below) are 1 higher than their respective payouts. This is because I
         //  subtract the bet right after they make it so when they cash out they get 1 times
         //  more than the payout to effectively get their original bet back.
-    private static final int THEE_OF_A_KIND_PAYOUT = 31;
-    private static final int STRAIGHT_PAYOUT = 6;
+    private static final int THREE_OF_A_KIND_PAYOUT = 31;
+    private static final int STRAIGHT_PAYOUT = 7;
     private static final int FLUSH_PAYOUT = 4;
     private static final int PAIR_PAYOUT = 2;
 
@@ -140,12 +140,15 @@ public class ThreeCardPoker {
                     System.out.println("Unfortunately the dealer didn't qualify. You get your play bet of $" + playBet + " back, but lose your ante bet of $" + anteBet + ".");
                 } else {
                     // If the dealer's hand qualifies then compare the hands.
-                    int playerWinnings = compareHands(playerHandRating, dealerHandRating , playerFirstCardNumber, playerSecondCardNumber, playerThirdCardNumber, dealerFirstCardNumber, dealerSecondCardNumber, dealerThirdCardNumber, playerHighCard, dealerHighCard, playBet);
-                    money += playerWinnings; // Add the player's play winnings to their wallet
-                    if (playerWinnings >= playBet * PLAY_BET_PAYOUT) {
+                    int playWinnings = compareHands(playerHandRating, dealerHandRating , playerFirstCardNumber, playerSecondCardNumber, playerThirdCardNumber, dealerFirstCardNumber, dealerSecondCardNumber, dealerThirdCardNumber, playerHighCard, dealerHighCard, playBet);
+                    money += playWinnings; // Add the player's play winnings to their wallet
+                    if (playWinnings >= playBet * PLAY_BET_PAYOUT) {
                         // If the player won the round then say that they won and what they won.
-                        System.out.println("You won the round! You got $" + playerWinnings/2 + "!");
-                    } else if (playerWinnings == playBet) {                  
+                        System.out.println("You won the round! You got $" + (playWinnings - (playBet * 2)) + "!");
+                            // playBet * 2, or rather playBet and anteBet (as playBet == anteBet)
+                            //  were subtracted from playWinnings so that this prints only what
+                            //  the player won on top of their original bets.
+                    } else if (playWinnings == playBet) {                  
                         // If the player and dealer tied then say that they tied.
                         //  (the winnings will just be the original playBet because if there is
                         //  a tie rule A applies (player loses ante but gets playBet returned).
@@ -167,7 +170,9 @@ public class ThreeCardPoker {
                 money += pairPlusWinnings; // Add the player's pairPlus winnings to their wallet.
 
                 if (pairPlusWinnings > 0) {
-                    System.out.println("You won your pair plus bet! You got $" + pairPlusWinnings/2 + "!");
+                    System.out.println("You won your pair plus bet! You got $" + (pairPlusWinnings - pairPlusBet) + "!");
+                        // pairPlusBet is subtracted from pairPlusWinnings so that this prints
+                        // purley what the player won on top of their bet.  
                 } else {
                     System.out.println("You lost your pair plus bet of $" + pairPlusBet + ".");
                 }
@@ -200,6 +205,7 @@ public class ThreeCardPoker {
                 }
             }
         }
+        in.close();
     }
 
 
@@ -227,36 +233,30 @@ public class ThreeCardPoker {
      */
     private static int compareHands(int playerHandRating, int dealerHandRating, int playerFirstCard, int playerSecondCard, int playerThirdCard, int dealerFirstCard,
                                     int dealerSecondCard, int dealerThirdCard, int playerHighCard, int dealerHighCard, int playBet) {
-        int playerWinnings = 0;
+        int playWinnings = 0;
  
-            if ((playerFirstCard == dealerFirstCard || playerFirstCard == dealerSecondCard || playerFirstCard == dealerThirdCard) &&
-                (playerSecondCard == dealerFirstCard || playerSecondCard == dealerSecondCard || playerSecondCard == dealerThirdCard) &&
-                (playerThirdCard == dealerFirstCard || playerThirdCard == dealerSecondCard || playerThirdCard == dealerThirdCard)) {
-                // Checks if the player's cards are the exact same (not including suit) as the
-                // dealer's cards, i.e. that there is a tie.
-                playerWinnings = playBet;
-            } else if (playerHandRating == STRAIGHT_FLUSH && dealerHandRating < STRAIGHT_FLUSH) {
-                playerWinnings = (playBet * PLAY_BET_PAYOUT);
+            if (playerHandRating == STRAIGHT_FLUSH && dealerHandRating < STRAIGHT_FLUSH) {
+                playWinnings = (playBet * PLAY_BET_PAYOUT);
             } else if (playerHandRating == THREE_OF_A_KIND && dealerHandRating < THREE_OF_A_KIND) {
-                playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                playWinnings = (playBet * PLAY_BET_PAYOUT);
             } else if (playerHandRating == STRAIGHT && dealerHandRating < STRAIGHT) {
-                playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                playWinnings = (playBet * PLAY_BET_PAYOUT);
             } else if (playerHandRating == FLUSH && dealerHandRating < FLUSH) {
-                playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                playWinnings = (playBet * PLAY_BET_PAYOUT);
             } else if (playerHandRating == PAIR && dealerHandRating < PAIR) {
-                playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                playWinnings = (playBet * PLAY_BET_PAYOUT);
             } else if (playerHandRating < PAIR && dealerHandRating < PAIR) {
-                playerWinnings = compareHighCards(playerHighCard, dealerHighCard, playBet, playerFirstCard, playerSecondCard, playerThirdCard, dealerFirstCard, dealerSecondCard, dealerThirdCard);
+                playWinnings = compareHighCards(playerHighCard, dealerHighCard, playBet, playerFirstCard, playerSecondCard, playerThirdCard, dealerFirstCard, dealerSecondCard, dealerThirdCard);
             } else if (playerHandRating == STRAIGHT_FLUSH && dealerHandRating == STRAIGHT_FLUSH) {
                 if (playerFirstCard + playerSecondCard + playerThirdCard > dealerFirstCard + dealerSecondCard + dealerThirdCard) {
                     // If the player's three cards add up to more than the dealer's three cards,
                     //  and they both have straight flushes, then logically the player has a
                     //  straight flush composed of higher cards than the dealer, so they win.
-                    playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                    playWinnings = (playBet * PLAY_BET_PAYOUT);
                 } else if (playerFirstCard + playerSecondCard + playerThirdCard == dealerFirstCard + dealerSecondCard + dealerThirdCard) {
                     // Same principle as the above if, but checking if the straights are the same,
                     //  indicating a tie.
-                    playerWinnings = playBet;
+                    playWinnings = playBet;
                 }
             } else if (playerHandRating == THREE_OF_A_KIND && dealerHandRating == THREE_OF_A_KIND) {
                 // If both the player and dealer have three of a kinds, check who has the
@@ -265,20 +265,20 @@ public class ThreeCardPoker {
                     // As all cards (numerically) are the same in a three of a kind, just check
                     //  any card from the hands to determine who's three of a kind is composed
                     //  of higher value cards.
-                    playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                    playWinnings = (playBet * PLAY_BET_PAYOUT);
                 } else if (playerFirstCard == dealerFirstCard) {
-                    playerWinnings = playBet;
+                    playWinnings = playBet;
                 }
             } else if (playerHandRating == STRAIGHT && dealerHandRating == STRAIGHT) {
                 if (playerFirstCard + playerSecondCard + playerThirdCard > dealerFirstCard + dealerSecondCard + dealerThirdCard) {
                     // Same principle as when the player and dealer have straight flushes.
                     //  This checks to see who's straight is of higher value.
-                    playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                    playWinnings = (playBet * PLAY_BET_PAYOUT);
                 } else if (playerFirstCard + playerSecondCard + playerThirdCard == dealerFirstCard + dealerSecondCard + dealerThirdCard) {
-                    playerWinnings = playBet;
+                    playWinnings = playBet;
                 }
             } else if (playerHandRating == FLUSH && dealerHandRating == FLUSH) {
-                playerWinnings = compareHighCards(playerHighCard, dealerHighCard, playBet, playerFirstCard, playerSecondCard, playerThirdCard, dealerFirstCard, dealerSecondCard, dealerThirdCard);
+                playWinnings = compareHighCards(playerHighCard, dealerHighCard, playBet, playerFirstCard, playerSecondCard, playerThirdCard, dealerFirstCard, dealerSecondCard, dealerThirdCard);
             } else if (playerHandRating == PAIR && dealerHandRating == PAIR) {
                 // If both the player and dealer have pairs, get the numerical values of the
                 //  pairs and compare them.
@@ -286,19 +286,19 @@ public class ThreeCardPoker {
                 int dealerPairHighCard = getPairHighCard(dealerFirstCard, dealerSecondCard, dealerThirdCard);
 
                 if (playerPairHighCard > dealerPairHighCard) {
-                    playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                    playWinnings = (playBet * PLAY_BET_PAYOUT);
                 } else if (playerPairHighCard == dealerPairHighCard) {
                     // If the pairs have the same numerical values, then check the remaining
                     //  card to determine the winner.
                     if (playerHighCard > dealerHighCard) {
-                        playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                        playWinnings = (playBet * PLAY_BET_PAYOUT);
                     } else if (playerHighCard == dealerHighCard) {
                         // If the remaining card is the same, then there is a tie.
-                        playerWinnings = playBet;
+                        playWinnings = playBet;
                     }
                 }
             }
-        return playerWinnings;
+        return playWinnings;
     }
 
     /**
@@ -355,12 +355,12 @@ public class ThreeCardPoker {
 
         if (playerHandRating == STRAIGHT_FLUSH) {
             pairPluswinnings = pairPlusBet * STRAIGHT_FLUSH_PAYOUT;
+        }  else if (playerHandRating == THREE_OF_A_KIND) {
+            pairPluswinnings = pairPlusBet * THREE_OF_A_KIND_PAYOUT;
+        }  else if (playerHandRating == STRAIGHT) {
+            pairPluswinnings = pairPlusBet * STRAIGHT_PAYOUT;
         } else if (playerHandRating == FLUSH) {
             pairPluswinnings = pairPlusBet * FLUSH_PAYOUT;
-        } else if (playerHandRating == STRAIGHT) {
-            pairPluswinnings = pairPlusBet * STRAIGHT_PAYOUT;
-        } else if (playerHandRating == THREE_OF_A_KIND) {
-            pairPluswinnings = pairPlusBet * THEE_OF_A_KIND_PAYOUT;
         } else if (playerHandRating == PAIR) {
             pairPluswinnings = pairPlusBet * PAIR_PAYOUT;
         }
@@ -398,17 +398,20 @@ public class ThreeCardPoker {
             if (playerSecondHighCard > dealerSecondHighCard) {
                 return playBet * PLAY_BET_PAYOUT;
             } else if (playerSecondHighCard == dealerSecondHighCard) {
-                // if the second highest cards are equal, then get the third highest cards and
+                // If the second highest cards are equal, then get the third highest cards and
                 //  compare them.
                 int playerThirdHighCard = getThirdHighCard(playerFirstCard, playerSecondCard, playerThirdCard);
                 int dealerThirdHighCard = getThirdHighCard(dealerFirstCard, dealerSecondCard, dealerThirdCard); 
 
                 if (playerThirdHighCard > dealerThirdHighCard) {
                     return playBet * PLAY_BET_PAYOUT;
+                } else if (playerThirdHighCard == dealerThirdHighCard) {
+                    // If the third highest cards are equal, then both hands are the exact
+                    //  same (numerically), indicating a tie, so return the playBet.
+                    //  (As per rule A, when there is a tie only the playBet is returned.)
+                    return playBet;
                 } else {
-                    // I don't need to check if the third highest cards are equal because if they
-                    //  are then both hands are the exact same, meaning I would have already caught
-                    //  the tie in my first check for a tie at the beginning of compareHands().
+
                     return 0;
                 }
             } else {

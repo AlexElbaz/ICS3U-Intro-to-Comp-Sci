@@ -22,9 +22,9 @@ public class ThreeCardPoker {
     private static final int MAX_BET = 100;
 
     /**
-     * I decided to rate hands using an integer based on what combination (pair, flush, etc.) they had.
-     *  To avoid magic numbers I assigned integers to combinations in ascending order of poker ranking.
-     *  i.e. straight flush is best hand, so it gets the highest integer value.
+     * I decided to rate hands using an integer based on what combination (pair, flush, etc.)
+     *  they had. To avoid magic numbers I assigned integers to combinations in ascending order
+     * of poker ranking. i.e. straight flush is best hand, so it gets the highest integer value.
      */
     private static final int STRAIGHT_FLUSH = 5;
     private static final int THREE_OF_A_KIND = 4;
@@ -33,19 +33,21 @@ public class ThreeCardPoker {
     private static final int PAIR = 1;
 
     private static final int STRAIGHT_FLUSH_PAYOUT = 41;
-        // Though the Straight Flush payout is 40 to 1, this variable (and the others to the line break below) are
-        //  1 higher than their respective payouts. This is because I subtract the bet right after they make it
-        //  so when they cash out they get 1 times more than the payout to effectively get their original bet back.
+        // Though the Straight Flush payout is 40 to 1, this variable (and the others to the
+        //  line break below) are 1 higher than their respective payouts. This is because I
+        //  subtract the bet right after they make it so when they cash out they get 1 times
+        //  more than the payout to effectively get their original bet back.
     private static final int THEE_OF_A_KIND_PAYOUT = 31;
     private static final int STRAIGHT_PAYOUT = 6;
     private static final int FLUSH_PAYOUT = 4;
     private static final int PAIR_PAYOUT = 2;
 
     private static final int PLAY_BET_PAYOUT = 4;
-        // The full payout for winning the round is your ante bet times two (you get your original bet back and
-        //  then 1 more times your bet) and your play bet times two (for the same reason as your ante). Since your 
-        //  play bet and your ante bet are required to be the same, the full payout for winning the round is  
-        //  basically 4 times either your play bet or your ante bet. 
+        // The full payout for winning the round is your ante bet times two (you get your
+        //  original bet back and then 1 more times your bet) and your play bet times two
+        //  (for the same reason as your ante). Since your play bet and your ante bet are
+        //  required to be the same, the full payout for winning the round is basically 4
+        //  times either your play bet or your ante bet. 
 
 
     private static final int CARD_ONE = 1;
@@ -94,9 +96,9 @@ public class ThreeCardPoker {
 
             int pairPlusBet = getPairPlus(in, money);
             money -= pairPlusBet;
-                // I chose to subtract this bet (and all the following bets) from the player's wallet right away.
-                //  This is mainly to avoid having to subtract money from the player later and instead only have to
-                //  add money.
+                // I chose to subtract this bet (and all the following bets) from the player's
+                //  wallet right away. This is mainly to avoid having to subtract money from
+                //  the player later and instead only have to add money.
             int anteBet = getAnte(in, money);
             money -= anteBet;
             System.out.println();
@@ -129,11 +131,11 @@ public class ThreeCardPoker {
             System.out.println();
 
             if (playBet > 0) {
-                // If the player's playBet is > 0, also known as the player decided to bet on their hand,
-                //  then check further.
+                // If the player's playBet is > 0, also known as the player decided to bet on
+                //  their hand, then check further.
                 if (dealerHighCard <= JACK && dealerHandRating < PAIR) {
-                    // If the dealer has a hand of Jack-high or worse, apply rule A (only give playBet back),
-                    //  and don't compare the hands.
+                    // If the dealer has a hand of Jack-high or worse, apply rule A (only give
+                    // playBet back), and don't compare the hands.
                     money += playBet;
                     System.out.println("Unfortunately the dealer didn't qualify. You get your play bet of $" + playBet + " back, but lose your ante bet of $" + anteBet + ".");
                 } else {
@@ -145,8 +147,8 @@ public class ThreeCardPoker {
                         System.out.println("You won the round! You got $" + playerWinnings/2 + "!");
                     } else if (playerWinnings == playBet) {                  
                         // If the player and dealer tied then say that they tied.
-                        //  (the winnings will just be the original playBet because if there is a tie rule A applies
-                        //  (player loses ante but gets playBet returned).)
+                        //  (the winnings will just be the original playBet because if there is
+                        //  a tie rule A applies (player loses ante but gets playBet returned).
                         System.out.println("You and the dealer tied. You get your play bet of $" + playBet + " back, but lose your ante bet of $" + anteBet + ".");
                     } else {
                         // If the player lost then say that they lost and what they lost.
@@ -154,7 +156,8 @@ public class ThreeCardPoker {
                     }
                 }
             } else {
-                // If the player's playBet is <= 0, also known as the player folded, then tell them what they lost.
+                // If the player's playBet is <= 0, also known as the player folded, then tell
+                //  them what they lost.
                 System.out.println("You lost your ante bet of $" + anteBet + ".");
             }
             
@@ -202,28 +205,35 @@ public class ThreeCardPoker {
 
 
     /**
-     * This function is designed to compare the player and dealer's hands to determine the winner of a round
-     *  and the winnings of the player.
+     * This function is designed to compare the player and dealer's hands to determine the
+     *  winner of a round and the winnings of the player.
      * 
-     * @param playerHandRating is an integer rating assigned to the player's hand based off the combination they posses.
-     * @param dealerHandRating is an integer rating assigned to the dealer's hand based off the combination they posses.
-     * @param playerFirstCard is the player's first card's numerical value.
-     * @param playerSecondCard is the player's second card's numerical value.
-     * @param playerThirdCard is the player's third card's numerical value.
-     * @param dealerFirstCard is the dealer's first card's numerical value.
-     * @param dealerSecondCard is the dealer's second card's numerical value.
-     * @param dealerThirdCard is the dealer's third card's numerical value.
-     * @param playerHighCard is the player's highest card's numerical value.
-     * @param dealerHighCard is the dealer's highest card's numerical value.
-     * @param playBet is the numerical value of the bet the player made on their hand (same as their ante).
-     * @return the player's winnings (which are added to the player's wallet and used to determine the winner, loser, etc. of the round).
+     * @param playerHandRating is an integer rating assigned to the player's hand based off
+     *   the combination they posses.
+     * @param dealerHandRating is an integer rating assigned to the dealer's hand based off
+     *   the combination they posses.
+     * @param playerFirstCard is the numerical value of the player's first card.
+     * @param playerSecondCard is the numerical value of the player's second card.
+     * @param playerThirdCard is the numerical value of the player's third card.
+     * @param dealerFirstCard is the numerical value of the dealer's first card.
+     * @param dealerSecondCard is the numerical value of the dealer's second card.
+     * @param dealerThirdCard is the numerical value of the dealer's third card.
+     * @param playerHighCard is the numerical value of the highest card in the player's hand.
+     * @param dealerHighCard is the numerical value of the highest card in the dealer's hand.
+     * @param playBet is the numerical value of the bet the player made on their hand
+     *   (same as their ante).
+     * @return the player's winnings (which are added to the player's wallet and used to
+     *   determine the winner, loser, etc. of the round).
      */
-    private static int compareHands(int playerHandRating, int dealerHandRating, int playerFirstCard, int playerSecondCard, int playerThirdCard, int dealerFirstCard, int dealerSecondCard, int dealerThirdCard, int playerHighCard, int dealerHighCard, int playBet) {
+    private static int compareHands(int playerHandRating, int dealerHandRating, int playerFirstCard, int playerSecondCard, int playerThirdCard, int dealerFirstCard,
+                                    int dealerSecondCard, int dealerThirdCard, int playerHighCard, int dealerHighCard, int playBet) {
         int playerWinnings = 0;
  
-            if ((playerFirstCard == dealerFirstCard || playerFirstCard == dealerSecondCard || playerFirstCard == dealerThirdCard) && (playerSecondCard == dealerFirstCard || playerSecondCard == dealerSecondCard || playerSecondCard == dealerThirdCard) && (playerThirdCard == dealerFirstCard || playerThirdCard == dealerSecondCard || playerThirdCard == dealerThirdCard)) {
-                // Checks if the player's cards are the exact same (not including suit) as the dealer's cards,
-                //  i.e. that there is a tie.
+            if ((playerFirstCard == dealerFirstCard || playerFirstCard == dealerSecondCard || playerFirstCard == dealerThirdCard) &&
+                (playerSecondCard == dealerFirstCard || playerSecondCard == dealerSecondCard || playerSecondCard == dealerThirdCard) &&
+                (playerThirdCard == dealerFirstCard || playerThirdCard == dealerSecondCard || playerThirdCard == dealerThirdCard)) {
+                // Checks if the player's cards are the exact same (not including suit) as the
+                // dealer's cards, i.e. that there is a tie.
                 playerWinnings = playBet;
             } else if (playerHandRating == STRAIGHT_FLUSH && dealerHandRating < STRAIGHT_FLUSH) {
                 playerWinnings = (playBet * PLAY_BET_PAYOUT);
@@ -236,34 +246,50 @@ public class ThreeCardPoker {
             } else if (playerHandRating == PAIR && dealerHandRating < PAIR) {
                 playerWinnings = (playBet * PLAY_BET_PAYOUT);
             } else if (playerHandRating < PAIR && dealerHandRating < PAIR) {
-                if (playerHighCard > dealerHighCard) {
+                playerWinnings = compareHighCards(playerHighCard, dealerHighCard, playBet, playerFirstCard, playerSecondCard, playerThirdCard, dealerFirstCard, dealerSecondCard, dealerThirdCard);
+            } else if (playerHandRating == STRAIGHT_FLUSH && dealerHandRating == STRAIGHT_FLUSH) {
+                if (playerFirstCard + playerSecondCard + playerThirdCard > dealerFirstCard + dealerSecondCard + dealerThirdCard) {
+                    // If the player's three cards add up to more than the dealer's three cards,
+                    //  and they both have straight flushes, then logically the player has a
+                    //  straight flush composed of higher cards than the dealer, so they win.
                     playerWinnings = (playBet * PLAY_BET_PAYOUT);
-                } else if (playerHighCard == dealerHighCard) {
-                    int playerSecondHighCard = getSecondHighCard(playerFirstCard, playerSecondCard, playerThirdCard);
-                    int dealerSecondHighCard = getSecondHighCard(dealerFirstCard, dealerSecondCard, dealerThirdCard);
-
-                    if (playerSecondHighCard > dealerSecondHighCard) {
-                        playerWinnings = (playBet * PLAY_BET_PAYOUT);
-                    } else if (playerSecondHighCard == dealerSecondHighCard) {
-                        int playerThirdHighCard = getThirdHighCard(playerFirstCard, playerSecondCard, playerThirdCard);
-                        int dealerThirdHighCard = getThirdHighCard(dealerFirstCard, dealerSecondCard, dealerThirdCard); 
-
-                        if (playerThirdHighCard > dealerThirdHighCard) {
-                            playerWinnings = (playBet * PLAY_BET_PAYOUT);
-                        } else if (playerThirdHighCard == dealerThirdHighCard) {
-                            playerWinnings = playBet;
-                        }
-                    }
+                } else if (playerFirstCard + playerSecondCard + playerThirdCard == dealerFirstCard + dealerSecondCard + dealerThirdCard) {
+                    // Same principle as the above if, but checking if the straights are the same,
+                    //  indicating a tie.
+                    playerWinnings = playBet;
                 }
+            } else if (playerHandRating == THREE_OF_A_KIND && dealerHandRating == THREE_OF_A_KIND) {
+                // If both the player and dealer have three of a kinds, check who has the
+                //  better three of a kind.
+                if (playerFirstCard > dealerFirstCard) {
+                    // As all cards (numerically) are the same in a three of a kind, just check
+                    //  any card from the hands to determine who's three of a kind is composed
+                    //  of higher value cards.
+                    playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                } else if (playerFirstCard == dealerFirstCard) {
+                    playerWinnings = playBet;
+                }
+            } else if (playerHandRating == STRAIGHT && dealerHandRating == STRAIGHT) {
+                if (playerFirstCard + playerSecondCard + playerThirdCard > dealerFirstCard + dealerSecondCard + dealerThirdCard) {
+                    // Same principle as when the player and dealer have straight flushes.
+                    //  This checks to see who's straight is of higher value.
+                    playerWinnings = (playBet * PLAY_BET_PAYOUT);
+                } else if (playerFirstCard + playerSecondCard + playerThirdCard == dealerFirstCard + dealerSecondCard + dealerThirdCard) {
+                    playerWinnings = playBet;
+                }
+            } else if (playerHandRating == FLUSH && dealerHandRating == FLUSH) {
+                playerWinnings = compareHighCards(playerHighCard, dealerHighCard, playBet, playerFirstCard, playerSecondCard, playerThirdCard, dealerFirstCard, dealerSecondCard, dealerThirdCard);
             } else if (playerHandRating == PAIR && dealerHandRating == PAIR) {
-                // If both the player and dealer have pairs, get the numerical values of the pairs and compare them.
+                // If both the player and dealer have pairs, get the numerical values of the
+                //  pairs and compare them.
                 int playerPairHighCard = getPairHighCard(playerFirstCard, playerSecondCard, playerThirdCard);
                 int dealerPairHighCard = getPairHighCard(dealerFirstCard, dealerSecondCard, dealerThirdCard);
 
                 if (playerPairHighCard > dealerPairHighCard) {
                     playerWinnings = (playBet * PLAY_BET_PAYOUT);
                 } else if (playerPairHighCard == dealerPairHighCard) {
-                    // If the pairs have the same numerical values, then check the remaining card to determine the winner.
+                    // If the pairs have the same numerical values, then check the remaining
+                    //  card to determine the winner.
                     if (playerHighCard > dealerHighCard) {
                         playerWinnings = (playBet * PLAY_BET_PAYOUT);
                     } else if (playerHighCard == dealerHighCard) {
@@ -271,30 +297,22 @@ public class ThreeCardPoker {
                         playerWinnings = playBet;
                     }
                 }
-            } else if (playerHandRating == THREE_OF_A_KIND && dealerHandRating == THREE_OF_A_KIND) {
-                // If both the player and dealer have three of a kinds, check who has the better three of a kind.
-                if (playerFirstCard > dealerFirstCard) {
-                    // As all cards (numerically) are the same in a three of a kind, just check any card from the
-                    //  hands to determine who's three of a kind is composed of higher value cards.
-                    playerWinnings = (playBet * PLAY_BET_PAYOUT);
-                } else if (playerFirstCard == dealerFirstCard) {
-                    playerWinnings = playBet;
-                }
             }
         return playerWinnings;
     }
 
     /**
-     * This function gives an integer rating to a hand depending on what combination(s) it possesses.
-     *  Rather than checking all the specific cases of who has what combinations, this allows easy comparison of 
-     *  the player and dealer's hands.
+     * This function gives an integer rating to a hand depending on what combination(s) it
+     *  possesses. Rather than checking all the specific cases of who has what combinations,
+     *  this allows easy comparison of the player and dealer's hands.
      * 
-     * @param firstCard is numerical value of the first card inputted (either from the player or dealer).
+     * @param firstCard is numerical value of the first card inputted (either from the player
+     *   or dealer).
      * @param secondCard is numerical value of the second card inputted.
      * @param thirdCard is numerical value of the third card inputted.
-     * @param hand is the hand of whoever this function was called for (either the player or dealer).
-     *  The hand is used to get the full individual cards from a hand, including suits, as suits are required to
-     *  calculate whether a hand has a flush.
+     * @param hand is the hand of whoever this function was called for (either player or dealer).
+     *   The hand is used to get the full individual cards from a hand, including suits, as suits
+     *   are required to calculate whether a hand has a flush.
      * @return
      */
     private static int rateHand(int firstCard, int secondCard, int thirdCard, String hand) {
@@ -303,8 +321,8 @@ public class ThreeCardPoker {
         String fullThirdCard = getCardFromHand(hand, CARD_THREE);
         
         if (checkStraight(firstCard, secondCard, thirdCard) && checkFlush(fullFirstCard, fullSecondCard, fullThirdCard)) {
-            // If checkStraight and checkFlush (return booleans) return true, then return the highest hand rating
-            //  (because straight + flush = straight flush = best hand).
+            // If checkStraight and checkFlush (return booleans) return true, then return the
+            //  highest hand rating (because straight + flush = straight flush = best hand).
             //  All the below else ifs work in the same fashion  (all the methods return booleans).
             return STRAIGHT_FLUSH;
         } else if (checkThreeOfAKind(firstCard, secondCard, thirdCard)) {
@@ -321,12 +339,16 @@ public class ThreeCardPoker {
     }
 
     /**
-     * This function uses the hand rating assigned to the player's hand to determine what combination they have 
-     *  and in that regard what they shoud win according to the pair plus payout chart.
+     * This function uses the hand rating assigned to the player's hand to determine what
+     *  combination they have and in that regard what they shoud win according to the pair plus
+     *  payout chart.
      * 
-     * @param playerHandRating is the integer rating assigned to the player's hand based on the combination they posses.
-     * @param pairPlusBet is the amount of money the player bet on having a hand with a pair or better (pair plus).
-     * @return the amount of money the player won from their pair plus bet (which is added to the player's wallet and used to determine if the player won or lost the pair plus bet).
+     * @param playerHandRating is the integer rating assigned to the player's hand based on the
+     *   combination they posses.
+     * @param pairPlusBet is the amount of money the player bet on having a hand with a pair or
+     *   better (pair plus).
+     * @return the amount of money the player won from their pair plus bet (which is added to
+     *   the player's wallet and used to determine if the player won or lost the pair plus bet).
      */
     private static int checkPairPlus(int playerHandRating, int pairPlusBet) {
         int pairPluswinnings = 0;
@@ -346,6 +368,58 @@ public class ThreeCardPoker {
     }
 
     /**
+     * This function compares the player and dealer's high cards to determine who won and lost,
+     *  or if there was a tie. The function will account for cases where the highest card from
+     *  both hands is the same, where the second highest card is also the same, and where the 
+     *  third highest (or lowest) card is also the same.
+     * 
+     * @param playerHighCard is the numerical value of the highest card in the player's hand.
+     * @param dealerHighCard is the numerical value of the highest card in the dealer's hand.
+     * @param playBet is the bet the player made on their hand.
+     * @param playerFirstCard is the numerical value of the player's first card.
+     * @param playerSecondCard is the numerical value of the player's second card.
+     * @param playerThirdCard is the numerical value of the player's third card.
+     * @param dealerFirstCard is the numerical value of the dealer's first card.
+     * @param dealerSecondCard is the numerical value of the dealer's second card.
+     * @param dealerThirdCard is the numerical value of the dealer's third card.
+     * @return the player's winnings after comparing the high cards (which will be 0 if the
+     *   player lost).
+     */
+    private static int compareHighCards(int playerHighCard, int dealerHighCard, int playBet, int playerFirstCard, int playerSecondCard,
+                                        int playerThirdCard, int dealerFirstCard, int dealerSecondCard, int dealerThirdCard) {
+        if (playerHighCard > dealerHighCard) {
+            return playBet * PLAY_BET_PAYOUT;
+        } else if (playerHighCard == dealerHighCard) {
+            // If the highest cards from both hand are equal, get the second highest cards and
+            //  compare them.
+            int playerSecondHighCard = getSecondHighCard(playerFirstCard, playerSecondCard, playerThirdCard);
+            int dealerSecondHighCard = getSecondHighCard(dealerFirstCard, dealerSecondCard, dealerThirdCard);
+
+            if (playerSecondHighCard > dealerSecondHighCard) {
+                return playBet * PLAY_BET_PAYOUT;
+            } else if (playerSecondHighCard == dealerSecondHighCard) {
+                // if the second highest cards are equal, then get the third highest cards and
+                //  compare them.
+                int playerThirdHighCard = getThirdHighCard(playerFirstCard, playerSecondCard, playerThirdCard);
+                int dealerThirdHighCard = getThirdHighCard(dealerFirstCard, dealerSecondCard, dealerThirdCard); 
+
+                if (playerThirdHighCard > dealerThirdHighCard) {
+                    return playBet * PLAY_BET_PAYOUT;
+                } else {
+                    // I don't need to check if the third highest cards are equal because if they
+                    //  are then both hands are the exact same, meaning I would have already caught
+                    //  the tie in my first check for a tie at the beginning of compareHands().
+                    return 0;
+                }
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    /**
      * This function gets the value of the highest card in the hand inputted. 
      * 
      * @param firstCard is the numerical value of the first card inputted.
@@ -355,17 +429,17 @@ public class ThreeCardPoker {
      */
     private static int getHighCard(int firstCard, int secondCard, int thirdCard) {
         int get_max = Math.max(firstCard, Math.max(secondCard, thirdCard));
-            // Gets the higher of two of the three cards in a hand and then the higher of the remaining card
-            //  and the higher of the two previous cards.
+            // Gets the higher of two of the three cards in a hand and then the higher of the
+            //  remaining card and the higher of the two previous cards.
         int get_min = Math.min(firstCard, Math.min(secondCard, thirdCard));
-            // Gets the lower of two of the three cards in a hand and then the lower of the remaining card
-            // and the lower of the two previous cards.
+            // Gets the lower of two of the three cards in a hand and then the lower of the
+            //  remaining card and the lower of the two previous cards.
         int get_mid = (firstCard + secondCard + thirdCard) - (get_max + get_min);
             // Gets the middle card.
 
         if (get_max == ACE && get_min == 2 && get_mid == 3) {
-            // Checks if the hand has a straight of ace, 2, 3 in which case ace becomes low meaning the high card
-            //  changes from 14 (ace) to 3 (the highest card of the straight).
+            // Checks if the hand has a straight of ace, 2, 3 in which case ace becomes low meaning
+            // the high card changes from 14 (ace) to 3 (the highest card of the straight).
             get_max = 3;
         }
         return get_max;
@@ -373,7 +447,8 @@ public class ThreeCardPoker {
 
     /**
      * This function gets the value of the second highest card in the hand inputted.
-     *  This is only really used to break a tie in the case both the player and dealer have the same high card.
+     *  This is only really used to break a tie in the case both the player and dealer have the
+     *  same high card.
      * 
      * @param firstCard is the numerical value of the first card inputted.
      * @param secondCard is the numerical value of the first card inputted.
@@ -390,8 +465,8 @@ public class ThreeCardPoker {
 
     /**
      * This function gets the value of the lowest card in the hand inputted.
-     *  This is only used to break a tie on the rare occasion that both the high card and second high card are the
-     *  same for both the player and dealer.
+     *  This is only used to break a tie on the rare occasion that both the high card and
+     *  second high card are the same for both the player and dealer.
      * 
      * @param firstCard is the numerical value of the first card inputted.
      * @param secondCard is the numerical value of the first card inputted.
@@ -404,15 +479,16 @@ public class ThreeCardPoker {
         int get_mid = (firstCard + secondCard + thirdCard) - (get_max + get_min);
 
         if (get_max == ACE && get_min == 2 && get_mid == 3) {
-            // Checks if there is an ace, 2, 3 run in which case the lowest card changes from 2 to 1 because the ace becomes low.
+            // Checks if there is an ace, 2, 3 run in which case the lowest card changes from
+            //  2 to 1 because the ace becomes low.
             get_min = 1;
         }
         return get_min;
     }
 
     /**
-     * This function determines who has a pair of higher value (a pair composed of higher value cards)
-     *  when both the player and dealer have pairs.
+     * This function determines who has a pair of higher value (a pair composed of higher value 
+     *  cards) when both the player and dealer have pairs.
      * 
      * @param firstCard is the numerical value of the first card inputted.
      * @param secondCard is the numerical value of the second card inputted.
@@ -461,8 +537,8 @@ public class ThreeCardPoker {
         int get_mid = (firstCard + secondCard + thirdCard) - (get_max + get_min);
 
         if (get_min == 2 && get_mid == 3 && get_max == ACE) {
-            // Since ace is able to be low or high, this makes sure that if you have an ace, 2, and 3 straight
-            //  it returns true.
+            // Since ace is able to be low or high, this makes sure that if you have an ace, 2,
+            //  and 3 straight it returns true.
             return true;
         }
         
@@ -483,9 +559,10 @@ public class ThreeCardPoker {
      * @return true if the hand has a flush and false if it does not.
      */
     private static boolean checkFlush(String firstCard, String secondCard, String thirdCard) {        
-        if (firstCard.substring(firstCard.length() - 1).equals(secondCard.substring(secondCard.length() - 1)) && secondCard.substring(secondCard.length() - 1).equals(thirdCard.substring(thirdCard.length() - 1))) {
-            // If the suits of all the cards match (first card suit matches second and second card suit matches third)
-            //  then return true.
+        if (firstCard.substring(firstCard.length() - 1).equals(secondCard.substring(secondCard.length() - 1)) &&
+            secondCard.substring(secondCard.length() - 1).equals(thirdCard.substring(thirdCard.length() - 1))) {
+            // If the suits of all the cards match (first card suit matches second and second
+            // card suit matches third) then return true.
             return true;
         } else {
             return false;
@@ -502,8 +579,8 @@ public class ThreeCardPoker {
      */
     private static boolean checkPair(int firstCard, int secondCard, int thirdCard) {
         if (firstCard == secondCard || secondCard == thirdCard || firstCard == thirdCard) {
-            // If the hand has a pair (first card matches the second, second matches third, OR first matches third)
-            //  return true.
+            // If the hand has a pair (first card matches the second, second matches third,
+            //  OR first matches third) return true.
             return true;
         } else {
             return false;
@@ -511,13 +588,15 @@ public class ThreeCardPoker {
     }
 
     /**
-     * This function gets whether the player wants to bet on their hand and if so, returns their bet
-     *  (which is just the previously inputted ante bet because as per the rules the ante bet and play bet must
-     *  be the same).
+     * This function gets whether the player wants to bet on their hand and if so, returns their
+     *  bet (which is just the previously inputted ante bet because as per the rules the ante
+     *  bet and play bet must be the same).
      * 
      * @param in is the scanner required to get input from the player.
-     * @param anteBet is the previously inputted ante bet used to determine the playBet if the player chooses to bet on their hand
-     * @return the amount the player wants to bet on their hand (which is the ante unless they don't want to bet in which case it returns 0).
+     * @param anteBet is the previously inputted ante bet used to determine the playBet if the
+     *   player chooses to bet on their hand
+     * @return the amount of money the player wants to bet on their hand (which is just the
+     *   ante unless they don't want to bet in which case it returns 0).
      */
     private static int getplayBet(Scanner in, int anteBet) {
         boolean validInput = false;
@@ -546,7 +625,8 @@ public class ThreeCardPoker {
      * This function gets the player's ante bet.
      * 
      * @param in is the scanner required to get input from the player.
-     * @param money is the amount of money the player currently has, used to confirm that the player has enough to make their bet and still play the round.
+     * @param money is the amount of money the player currently has, used to confirm that the
+     *   player has enough money to make their bet and still play the round.
      * @return the amount that the player wants to bet for their ante.
      */
     private static int getAnte(Scanner in, int money) {
@@ -563,14 +643,18 @@ public class ThreeCardPoker {
                 String betAmountStr =  in.nextLine();
 
                 if (betAmountStr.substring(0, 1).equals("$")) {
+                    // Makes sure that I have one $ in input (which I want) so I know I am
+                    //  cutting the betAmountStr string at the correct place for it to be
+                    //  parsable and still be the full, correct number.
                     betAmountInt = Integer.parseInt(betAmountStr.substring(1));
                     if (betAmountInt < MIN_BET) {
                         System.out.print("Please input at least $50: ");
                     } else if (betAmountInt > MAX_BET) {
                         System.out.print("Please input no more than $100: ");
                     } else if (betAmountInt > money/2) {
-                        // Makes sure that the bet the player is trying to make is no more than half their current
-                        //  money so that they will still have the money play the round.
+                        // Makes sure that the bet the player is trying to make is no more than
+                        //  half their current money so that they will still have the money play
+                        //  the round.
                         System.out.print("You do not have that much money, please bet a lower amount: ");
                     } else {
                         validBet = true;
@@ -579,8 +663,10 @@ public class ThreeCardPoker {
                     System.out.print("Please put a number in the format $mm(m): ");
                 }
             } catch (Exception e) {
-                // In this try catch there were two exceptions I needed to catch, so I found that the most efficient
-                //  way to do that was to catch all exceptions as I respond the same way to all (expected) exceptions.
+                // In this try catch there were two exceptions I needed to catch
+                //  (NumberFormatException and NoSuchElementException), so I found that the most
+                //  efficient way to do that was to catch all exceptions as I respond the same
+                //  way to all (expected) exceptions.
                 System.out.print("Please put a number in the format $mm(m): ");
             }
         }
@@ -588,10 +674,14 @@ public class ThreeCardPoker {
     }
 
     /**
+     * This function gets whether the player wants to place a pair plus bet (a bet on whether
+     *  the player will have a pair or better in their hand), and if so how much they want to bet.
      * 
-     * @param in
-     * @param money
-     * @return
+     * @param in is the scanner required to get input from the player.
+     * @param money is the amount of money the player currently has, used to make sure the
+     *   player has enough money to make their bet and still bet for their ante and play the round.
+     * @return the amount of money the player wants to bet for their pair plus (which returns 0
+     *   in the case that they do not want to make a pair plus bet).
      */
     private static int getPairPlus(Scanner in, int money) {
         boolean wantsBet = false;
@@ -600,7 +690,7 @@ public class ThreeCardPoker {
         boolean hasDone = false;
         int betAmountInt = 0;
         
-        while (!validInput) {
+        while (!validInput) {   // This while gets whether the player wants to bet.
             if (!hasDone) {
                 System.out.print("Do you want to place a pair plus bet (Y/N)? ");
                 hasDone = true;
@@ -608,6 +698,9 @@ public class ThreeCardPoker {
             String temp = in.nextLine().toUpperCase();
             if (temp.equals("Y")) {
                 if (money < MIN_BET + MIN_MONEY_TO_PLAY) {
+                    // If their money is less than $150 (the minimum amount needed to make all
+                    //  three bets) then tell them they are unable to make the minimum bet for
+                    //  pair plus while still being able to afford an ante and play bet.
                     System.out.println("You do not have enough money to make this bet (in order to play the round).");
                     return 0;
                 } else {
@@ -624,7 +717,7 @@ public class ThreeCardPoker {
         hasDone = false;
 
         if (wantsBet) {
-            while (!validBet) {
+            while (!validBet) {  // If the player wants to bet, this while gets their bet amount.
             
                 if (!hasDone) {
                     System.out.print("How much would you like to bet ($50-$100): ");
@@ -649,6 +742,8 @@ public class ThreeCardPoker {
                         System.out.print("Please put a number in the format $mm(m): ");
                     }
                 } catch (Exception e) {
+                    // I had to catch multiple exceptions and found that catching all exceptions
+                    //  was most efficient, same as in getAnte.
                     System.out.print("Please put a number in the format $mm(m): ");
                 }
             }
@@ -657,9 +752,11 @@ public class ThreeCardPoker {
     }
 
     /**
+     * This function gets the amount of money that the player wants to start with and assigns
+     *  it to the money variable.
      * 
-     * @param in
-     * @return
+     * @param in is the scanner required to input from the player.
+     * @return the amount of money that the player wants to start with.
      */
     private static int getStartingMoney(Scanner in) {
         boolean validInput = false;
@@ -682,7 +779,8 @@ public class ThreeCardPoker {
                 } else {
                     System.out.print("Please put a number in the format $mmm: ");
                 }
-            } catch (Exception e) {                         // I needed to catch multiple exceptions (NumberFormatException and NoSuchElementException) and just catching all exceptions was the most efficient way to do it because I follow the same procedure no matter the exception that is thrown (at least no matter which of the exceptions I want is thrown).
+            } catch (Exception e) {
+                // Same thing for the same reason as getAnte.
                 System.out.print("Please put a number in the format $mmm: ");
             }
         }
@@ -690,49 +788,77 @@ public class ThreeCardPoker {
     }
 
     /**
+     * This function gets the numerical value of a certain card (either 1, 2, or 3) from a hand 
+     *  depending on what card is input as the cardWanted. ("3D 4H 8C", 1 == 3).
      * 
-     * @param hand
-     * @param cardWanted
-     * @return
+     * @param hand is a full hand of three cards (either the player or dealer's).
+     * @param cardWanted is the numerical value of the card wanted, either 1, 2, or 3,
+     *   used to determine which card's value is returned.
+     * @return the numerical value of a card, indicated by the cardWanted variable, from the hand.
      */
     private static int getCardNumber(String hand, int cardWanted) {
         String temp = hand.substring(hand.indexOf(" ") + 1);
+            // The hand that was inputted exluding the first card (starts at the second card).
         if (cardWanted == 1) {
+            // If when called the function said that it wanted the first card (CARD_ONE),
+            //  then give it back the first card.
             String card = checkFaceValues(hand.substring(0, hand.indexOf(" ")));
+                // Gets the first card from the hand, and uses the checkFaceValues() function
+                //  to turn face cards into their numerical counterparts (J = 11, etc.).
             return Integer.parseInt(card.substring(0, card.length() - 1));
+                // Returns the parsed card (without the suit, so that the string is parsable).
         } else if (cardWanted == 2) {
+            // If the second card is wanted, return the second card.
             String card = checkFaceValues(temp.substring(0, temp.indexOf(" ")));
             return Integer.parseInt(card.substring(0, card.length() - 1));
         } else {
-            String card = checkFaceValues(temp.substring(temp.indexOf(" ") + 1, temp.length() - 1));  // minus 1 because I had to account for a space after the third card/at the end of the hand (and temp) string(s).
+            // Otherwise, the third card is wanted so return that.
+            String card = checkFaceValues(temp.substring(temp.indexOf(" ") + 1, temp.length() - 1));
+                // minus 1 after temp.length() because I had to account for an extra space after
+                //  the third card in the hand, i.e. at the end of the hand (and temp) string(s).
             return Integer.parseInt(card.substring(0, card.length() - 1));
         }   
     }
 
     /**
+     * This function gets a certain card from a hand depending on what card is input as
+     *  cardWanted. ("3D 4H 8C", 1 == 3D).
      * 
-     * @param hand
-     * @param cardWanted
-     * @return
+     * @param hand is a full hand of three cards (either the player or dealer's). 
+     * @param cardWanted is the numerical value of the card wanted, used to determine which card
+     *   is returned.
+     * @return a (full) card (includes suits), indicated by the cardWanted variable, from the hand.
      */
     private static String getCardFromHand(String hand, int cardWanted) {
         String temp = hand.substring(hand.indexOf(" ") + 1);
+            // The hand that was inputted exluding the first card (starts at the second card).
         if (cardWanted == 1) {
+            // Same reason as in getCardNumber().
+            //  (the else if and else are for the same reason as in getCardNumber() as well).
             return checkFaceValues(hand.substring(0, hand.indexOf(" ")));
+                // Similar to getCardNumber(), but this method returns the full card as a String
+                //  rather than the card's value as an int.
         } else if (cardWanted == 2) {
             return checkFaceValues(temp.substring(0, temp.indexOf(" ")));
         } else {
-            return checkFaceValues(temp.substring(temp.indexOf(" ") + 1, temp.length() - 1)); // minus 1 because I have to account for a space at the end of the hand (and temp) string(s).
+            return checkFaceValues(temp.substring(temp.indexOf(" ") + 1, temp.length() - 1));
+                // minus 1 after temp.length() because I had to account for an extra space after
+                //  the third card in the hand, i.e. at the end of the hand (and temp) string(s).
         }
     }
 
     /**
+     * This function converts face cards (jack, queen, king, and ace) into their respective
+     *  numerical values. (JD = 11D).
      * 
-     * @param card
-     * @return
+     * @param card is the card inputted which gets checked for faces and converted if necessary.
+     * @return the card inputted such that if it is a face card it gets converted to the
+     *   form 00S (QD = 12D) and if it is not it remains untampered (2D = 2D).
      */
     private static String checkFaceValues(String card) {
         if (card.substring(0, 1).equals("J")) {
+            // If the card's first character is "J", indicating a jack, then return 11 plus the
+            // suit. The same concept applies to the below else ifs.
             return "11" + card.substring(card.length() - 1);
         } else if (card.substring(0, 1).equals("Q")) {
             return "12" + card.substring(card.length() - 1);
@@ -741,13 +867,16 @@ public class ThreeCardPoker {
         } else if (card.substring(0, 1).equals("A")) {
             return "14" + card.substring(card.length() - 1);
         } else {
+            // If the first character is none of the above, i.e. the card is not a face card,
+            //  then just return the original card.
         return card;
         }
     }
 
     /**
+     * This function creates hands of three cards used for playing the Three Card Poker game.
      * 
-     * @return
+     * @return the hand created (a set of three cards separated by spaces).
      */
     private static String dealCards() {
         String cards = "";
@@ -757,7 +886,13 @@ public class ThreeCardPoker {
             while (!hasCard) {
                 String card = getCard();
                 if (isUnique(cards, card)) {
+                    // This along with the while loop makes sure that there cannot be
+                    //  the exact same card more than once in a given hand.
                     cards += card + " ";
+                        // Due to this line of code there is an extra space at the end of the
+                        //  hand string produced by this function. This is why in getCardNumber()
+                        //  and getCardFromHand() I had to subtract 1 from the length of the
+                        //  temp string like I mentioned.
                     hasCard = true;
                 }
             }
@@ -767,26 +902,63 @@ public class ThreeCardPoker {
     }
 
     /**
+     * This function makes sure that a given card in unique from the others in its hand.
      * 
-     * @param playerHand
-     * @param card
-     * @return
+     * @param hand is the portion of the hand we currently have (as we are creating the hand at
+     *   this point) inputted to be compared to the new card.
+     * @param card is the card inputted to be compared to the existing portion of the hand
+     *   (and added to hand if it is unique).
+     * @return true if the card is unique and false if it is not.
      */
-    private static boolean isUnique(String playerHand, String card) {
-        return playerHand.indexOf(card) == -1;
+    private static boolean isUnique(String hand, String card) {
+        return hand.indexOf(card) == -1;
+            // Checks if the card does not appear in the hand and returns true if it does not
+            //  (and false if it does).
     }
 
     /**
+     * This function combines the getFace() and getSuit() functions to create a full card with
+     *  a face/number and suit (i.e. 3D, JS, etc.).
      * 
-     * @return
+     * @return a full card.
      */
     private static String getCard() {
         return getFace() + getSuit();
     }
 
     /**
+     * This function generates a random number between 2 and 14 (encasing all possible
+     *  numerical values for cards in a deck, numbers above 10 being face cards) and determines
+     *  the face of the card using the number generated.
      * 
-     * @return
+     * @return the face of the card. The face is just the number if it is <= 10, or a letter
+     *   (J,Q,K,A) coresponding to the number's value (J=11, etc.) if it is > 10 (face cards).
+     */
+    private static String getFace() {
+        int face = (int) (Math.random() * NUM_FACES + 2);
+        
+        if (face >= 2 && face <= 10) {
+           return "" + face;
+            // If the card's face is 2-10, return it as the number but as a String rather
+            //  than an int.
+        } else if (face == JACK) {
+            return "J";
+        } else if (face == QUEEN) {
+            return "Q";
+        } else if (face == KING) {
+            return "K";
+        } else if (face == ACE) {
+            return "A";
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * This function generates a random number between 0 and 3 and assigns a suit based on that
+     *  number.
+     * 
+     * @return the suit, either D (diamond), H (hearts), S (spades), or C (clubs).
      */
     private static String getSuit() {
         int suit = (int) (Math.random() * NUM_SUITS);
@@ -799,28 +971,6 @@ public class ThreeCardPoker {
             return "S";
         } else if (suit == CLUBS) {
             return "C";
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * 
-     * @return
-     */
-    private static String getFace() {
-        int face = (int) (Math.random() * NUM_FACES + 2);
-        
-        if (face >= 2 && face <= 10) {
-           return "" + face;
-        } else if (face == JACK) {
-            return "J";
-        } else if (face == QUEEN) {
-            return "Q";
-        } else if (face == KING) {
-            return "K";
-        } else if (face == ACE) {
-            return "A";
         } else {
             return null;
         }

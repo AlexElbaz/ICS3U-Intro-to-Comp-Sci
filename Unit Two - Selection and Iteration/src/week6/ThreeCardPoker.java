@@ -802,7 +802,7 @@ public class ThreeCardPoker {
     private static int getCardNumber(String hand, int cardWanted) {
         String temp = hand.substring(hand.indexOf(" ") + 1);
             // The hand that was inputted exluding the first card (starts at the second card).
-        if (cardWanted == 1) {
+        if (cardWanted == CARD_ONE) {
             // If when called the function said that it wanted the first card (CARD_ONE),
             //  then give it back the first card.
             String card = checkFaceValues(hand.substring(0, hand.indexOf(" ")));
@@ -810,7 +810,7 @@ public class ThreeCardPoker {
                 //  to turn face cards into their numerical counterparts (J = 11, etc.).
             return Integer.parseInt(card.substring(0, card.length() - 1));
                 // Returns the parsed card (without the suit, so that the string is parsable).
-        } else if (cardWanted == 2) {
+        } else if (cardWanted == CARD_TWO) {
             // If the second card is wanted, return the second card.
             String card = checkFaceValues(temp.substring(0, temp.indexOf(" ")));
             return Integer.parseInt(card.substring(0, card.length() - 1));
@@ -835,13 +835,13 @@ public class ThreeCardPoker {
     private static String getCardFromHand(String hand, int cardWanted) {
         String temp = hand.substring(hand.indexOf(" ") + 1);
             // The hand that was inputted exluding the first card (starts at the second card).
-        if (cardWanted == 1) {
+        if (cardWanted == CARD_ONE) {
             // Same reason as in getCardNumber().
             //  (the else if and else are for the same reason as in getCardNumber() as well).
             return checkFaceValues(hand.substring(0, hand.indexOf(" ")));
                 // Similar to getCardNumber(), but this method returns the full card as a String
                 //  rather than the card's value as an int.
-        } else if (cardWanted == 2) {
+        } else if (cardWanted == CARD_TWO) {
             return checkFaceValues(temp.substring(0, temp.indexOf(" ")));
         } else {
             return checkFaceValues(temp.substring(temp.indexOf(" ") + 1, temp.length() - 1));

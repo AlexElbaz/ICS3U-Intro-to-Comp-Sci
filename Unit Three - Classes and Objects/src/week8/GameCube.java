@@ -20,6 +20,9 @@ public class GameCube {
     * 
     * Return type of constructor is missing and is not needed.
     * When the method is done the user will recieve an instance of a GameCube.
+    *
+    * The constructor's job is to initialize/instantiate the state of the object and
+    *  return an instance of the class.
     */
     public GameCube(int numberOfSides) {
         numSides = numberOfSides;
